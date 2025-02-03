@@ -24,10 +24,6 @@
 // };
 // delayedColorChange('blue', 3000, () => { console.log('inside callback'); });
 
-
-
-
-
 const fakeRequestCallBack = (url, success, failure) =>
 {
     const delay = Math.floor(Math.random() * 4500) + 500;
@@ -43,18 +39,20 @@ const fakeRequestCallBack = (url, success, failure) =>
         }
     }, delay);
 };
-fakeRequestCallBack('random.com', function ()
-{
-    console.log('page 1 request success');
 
-    fakeRequestCallBack('random.com/page2',
-        function ()
-        {
-            console.log('page 2 reqeust sent');
-        },
-        function ()
-        {
-            console.log('page 2 request failed');
-        });
+fakeRequestCallBack(
+    'random.com',
+    function ()
+    {
+        console.log('page 1 request success');
+        fakeRequestCallBack('random.com/page2',
+            function ()
+            {
+                console.log('page 2 reqeust sent');
+            },
+            function ()
+            {
+                console.log('page 2 request failed');
+            });
+    }, function () { console.log('failed'); });
 
-}, function () { console.log('failed'); });
